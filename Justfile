@@ -1,8 +1,8 @@
 tag := "30"
 template := "30000"
 prefix := "3000"
-ciuser := `yq e .bootstrap_nodes.master[0].password /home/bri/dev/home-flux-cluster/bootstrap/vars/config.yaml`
-cipassword := `yq e .bootstrap_nodes.master[0].username /home/bri/dev/home-flux-cluster/bootstrap/vars/config.yaml`
+ciuser := `yq e .bootstrap_nodes.master[0].username /home/bri/dev/home-flux-cluster/bootstrap/vars/config.yaml`
+cipassword := `yq e .bootstrap_nodes.master[0].password /home/bri/dev/home-flux-cluster/bootstrap/vars/config.yaml`
 
 # Default task: just list the tasks
 _default:
@@ -47,7 +47,6 @@ rebuild:
   just create_worker 2
 
 build_kube:
-  task configure
   task ansible:prepare
   task ansible:list
   task ansible:ping
@@ -57,7 +56,8 @@ build_kube:
 
 full_rebuild:
   just rebuild
-  sleep 30s
+  sleep 15s
+  task configure
   just build_kube
   -watch -d task cluster:resources
 
