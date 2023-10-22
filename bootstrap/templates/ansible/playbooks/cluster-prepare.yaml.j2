@@ -8,13 +8,14 @@
     - name: Pausing for 5 seconds...
       ansible.builtin.pause:
         seconds: 5
+    - name: Populate service facts
+      service_facts:
   tasks:
     - name: Locale
       block:
         - name: Locale | Set timezone
           community.general.timezone:
             name: "{% raw %}{{ timezone | default('Etc/UTC') }}{% endraw %}"
-
     - name: Packages
       block:
         - name: Packages | Install
@@ -84,6 +85,7 @@
             name: apparmor
             state: stopped
             masked: true
+            when: ansible_facts.services['apparmor.service'] is defined
         - name: System Configuration | Disable swap
           ansible.posix.mount:
             name: "{% raw %}{{ item }}{% endraw %}"
