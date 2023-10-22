@@ -81,6 +81,7 @@
             mode: "0755"
             content: neofetch --config none
         - name: System Configuration | Disable apparmor
+          when: ansible_facts.services['apparmor.service'] is defined
           ansible.builtin.systemd:
             name: apparmor
             state: stopped
