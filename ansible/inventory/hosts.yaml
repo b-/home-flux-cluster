@@ -1,0 +1,13 @@
+---
+kubernetes:
+  children:
+    master:
+      hosts:
+        k3s-controller-01:
+          ansible_user: bri
+          ansible_host: 192.168.30.31
+    worker:
+      hosts:
+        k3s-worker-02:
+          ansible_user: bri
+          ansible_host: 192.168.30.32
