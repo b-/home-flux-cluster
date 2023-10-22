@@ -8,7 +8,7 @@ spec:
   interval: 30m
   ref:
     branch: main
-  url: "https://github.com/perchnet/home-flux-cluster.git"
+  url: "https://github.com/b-/home-flux-cluster.git"
   ignore: |
     # exclude all
     /*
