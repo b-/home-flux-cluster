@@ -46,10 +46,14 @@ rebuild:
   -just destroy_vm 2
   just create_worker 2
 
+wait_for_ping:
+  until task ansible:ping ; do sleep 1s ; done
+
 build_kube:
+  task configure
   task ansible:prepare
   task ansible:list
-  task ansible:ping
+  just wait_for_ping
   task ansible:install
   flux check --pre
   task cluster:install
@@ -57,7 +61,6 @@ build_kube:
 full_rebuild:
   just rebuild
   sleep 15s
-  task configure
   just build_kube
   -watch -d task cluster:resources
 
